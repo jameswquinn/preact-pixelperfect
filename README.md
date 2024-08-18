@@ -1,13 +1,13 @@
 # PreactPixelPerfect
 
-PreactPixelPerfect is an advanced image loading and optimization library for Preact applications. It provides lazy loading, responsive images, background image handling, and more, all with a focus on delivering pixel-perfect results.
+PreactPixelPerfect is an advanced image loading library for Preact applications, offering lazy loading, responsive images, background image handling, and more, with an enhanced blur-up/LQIP effect.
 
 ## Features
 
 - 🖼️ Lazy loading of images and iframes
 - 📱 Responsive image loading with `srcset` and `sizes` support
 - 🌄 Background image lazy loading with `bgset` support
-- 🌫️ Blur-up effect for smoother loading
+- 🌫️ Advanced blur-up effect for smoother loading
 - 📡 Device and network-aware image loading
 - 🖼️ Support for `<picture>` element and multiple image formats
 - ⚡ Critical image handling for above-the-fold content
@@ -30,9 +30,8 @@ function MyComponent() {
       src="image.jpg"
       srcset="image-small.jpg 300w, image-medium.jpg 600w, image-large.jpg 1200w"
       sizes="(max-width: 300px) 100vw, (max-width: 600px) 50vw, 33vw"
-      alt="Pixel perfect image"
+      alt="Responsive image"
       blurUp={true}
-      parentFit="cover"
     />
   );
 }
@@ -40,70 +39,47 @@ function MyComponent() {
 
 ## Advanced Usage
 
-### With `<picture>` Element
+### Blur-up Effect with Custom Options
 
 ```jsx
-import { PixelPerfectImage } from 'preact-pixelperfect';
-
-function MyPictureComponent() {
-  return (
-    <picture>
-      <source
-        type="image/webp"
-        srcset="image-small.webp 300w, image-medium.webp 600w, image-large.webp 1200w"
-        sizes="(max-width: 300px) 100vw, (max-width: 600px) 50vw, 33vw"
-      />
-      <source
-        type="image/png"
-        srcset="image-small.png 300w, image-medium.png 600w, image-large.png 1200w"
-        sizes="(max-width: 300px) 100vw, (max-width: 600px) 50vw, 33vw"
-      />
-      <PixelPerfectImage
-        src="image-fallback.jpg"
-        srcset="image-small.jpg 300w, image-medium.jpg 600w, image-large.jpg 1200w"
-        sizes="(max-width: 300px) 100vw, (max-width: 600px) 50vw, 33vw"
-        alt="Pixel perfect image with format fallbacks"
-        blurUp={true}
-      />
-    </picture>
-  );
-}
+<PixelPerfectImage
+  src="large-image.jpg"
+  alt="High quality image"
+  blurUp={{ enabled: true, size: 60, blur: 30 }}
+/>
 ```
 
 ### Background Image
 
 ```jsx
-import { PixelPerfectImage } from 'preact-pixelperfect';
-
-function BackgroundImageComponent() {
-  return (
-    <PixelPerfectImage
-      bg="background-image.jpg"
-      bgset="small.jpg 300w, medium.jpg 600w, large.jpg 1200w"
-      parentFit="cover"
-      style={{ width: '100%', height: '300px' }}
-    />
-  );
-}
+<PixelPerfectImage
+  bg="background-image.jpg"
+  bgset="small.jpg 300w, medium.jpg 600w, large.jpg 1200w"
+  style={{ width: '100%', height: '300px' }}
+/>
 ```
 
 ### Critical Image (Loads Immediately)
 
 ```jsx
-import { PixelPerfectImage } from 'preact-pixelperfect';
-
-function CriticalImageComponent() {
-  return (
-    <PixelPerfectImage
-      src="critical-image.jpg"
-      alt="Critical content"
-      isCritical={true}
-    />
-  );
-}
+<PixelPerfectImage
+  src="critical-image.jpg"
+  alt="Above-the-fold content"
+  isCritical={true}
+/>
 ```
 
-## API
+### With `<picture>` Element
+
+```jsx
+<picture>
+  <source type="image/webp" srcset="image.webp" />
+  <source type="image/jpeg" srcset="image.jpg" />
+  <PixelPerfectImage src="image.jpg" alt="Fallback" />
+</picture>
+```
+
+## API Reference
 
 ### PixelPerfectImage Props
 
@@ -114,20 +90,28 @@ function CriticalImageComponent() {
 | `sizes` | string | - | The image sizes attribute |
 | `bg` | string | - | Background image URL |
 | `bgset` | string | - | Background image srcset |
-| `parentFit` | 'contain' \| 'cover' \| 'fill' \| 'none' | 'contain' | How the image should fit within its container |
-| `blurUp` | boolean | false | Whether to use the blur-up effect |
-| `blurUpSize` | number | 40 | The size of the blurred placeholder image |
-| `iframeSrc` | string | - | The iframe source URL |
-| `onLoad` | function | - | Callback function when the image is loaded |
-| `onError` | function | - | Callback function when the image fails to load |
-| `placeholder` | JSX.Element | - | Custom placeholder while the image is loading |
+| `alt` | string | - | Alternative text for the image |
+| `blurUp` | boolean \| BlurUpOptions | false | Enable and configure blur-up effect |
+| `isCritical` | boolean | false | Load image immediately if true |
+| `parentFit` | 'contain' \| 'cover' \| 'fill' \| 'none' | 'contain' | Background image fit |
 | `threshold` | number | 0 | IntersectionObserver threshold |
 | `rootMargin` | string | '200px' | IntersectionObserver root margin |
-| `isCritical` | boolean | false | Whether the image should load immediately |
+| `onLoad` | function | - | Callback when image loads |
+| `onError` | function | - | Callback on load error |
+| `placeholder` | JSX.Element | - | Custom placeholder element |
+| `style` | CSSProperties | - | Additional styles for the element |
 
-### PreactPixelPerfect Configuration
+### BlurUpOptions
 
-You can customize the global configuration using the `setConfig` method:
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `enabled` | boolean | true | Enable blur-up effect |
+| `size` | number | 40 | Size of the blurred placeholder |
+| `blur` | number | 20 | Blur intensity (in pixels) |
+
+### PreactPixelPerfect.setConfig(config)
+
+Allows global configuration of the library.
 
 ```javascript
 import { PreactPixelPerfect } from 'preact-pixelperfect';
@@ -139,33 +123,34 @@ PreactPixelPerfect.setConfig({
 });
 ```
 
+## Best Practices
+
+1. Always provide `alt` text for accessibility.
+2. Use `srcset` and `sizes` for responsive images when possible.
+3. Implement blur-up effect for larger images to improve perceived loading speed.
+4. Use the `isCritical` prop for above-the-fold images that should load immediately.
+5. Optimize your images before using them with PreactPixelPerfect for best performance.
+6. Adjust blur-up options based on your specific needs and performance requirements.
+
 ## Browser Support
 
-PreactPixelPerfect uses the Intersection Observer API for efficient lazy loading. For browsers that don't support this API, a polyfill is automatically loaded. In case the polyfill fails to load, images will be loaded immediately to ensure content visibility.
+PreactPixelPerfect uses the Intersection Observer API with a polyfill fallback, ensuring broad browser support. The blur-up effect uses the Canvas API, which is widely supported in modern browsers.
 
 ## Performance Considerations
 
-- PreactPixelPerfect uses modern browser APIs like Intersection Observer for efficient lazy loading.
-- The blur-up effect and responsive image loading help improve perceived performance.
-- Device and network awareness allows for optimized image loading based on the user's context.
+- Use appropriately sized images for different device sizes.
+- Implement proper caching strategies on your server.
+- Consider using WebP format for smaller file sizes where supported.
+- Adjust blur-up size and intensity based on your specific use case. Smaller, less blurred placeholders load faster but provide less visual information.
+- For critical, above-the-fold images, consider preloading or using the `isCritical` prop to load immediately.
 
-## Comparison with lazysizes
+## TypeScript Support
 
-While both PreactPixelPerfect and lazysizes aim to optimize image loading, they have different strengths:
+PreactPixelPerfect includes TypeScript definitions out of the box. You can import types as follows:
 
-### PreactPixelPerfect:
-- Optimized for Preact applications
-- Built-in device and network awareness
-- Uses Intersection Observer API for modern browsers
-- All-in-one solution with less configuration needed
-
-### lazysizes:
-- Framework-agnostic
-- Extensive plugin system for customization
-- Broader browser support out-of-the-box
-- Smaller core library size
-
-Choose PreactPixelPerfect if you're building a Preact application and want a feature-rich, easy-to-use solution. Consider lazysizes if you need a more customizable, framework-agnostic option with broader browser support.
+```typescript
+import { PixelPerfectImage, PixelPerfectImageProps } from 'preact-pixelperfect';
+```
 
 ## Contributing
 
@@ -178,3 +163,15 @@ PreactPixelPerfect is [MIT licensed](LICENSE).
 ## Support
 
 If you encounter any issues or have questions, please file an issue on the [GitHub repository](https://github.com/yourusername/preact-pixelperfect/issues).
+
+## Changelog
+
+### 1.1.0
+
+- Enhanced blur-up/LQIP implementation with customizable options
+- Improved TypeScript support
+- Performance optimizations
+
+### 1.0.0
+
+- Initial release
