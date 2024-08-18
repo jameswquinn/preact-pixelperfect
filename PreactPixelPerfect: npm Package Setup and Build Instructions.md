@@ -1,6 +1,6 @@
-# PreactPixelPerfect: Complete npm Package Setup and Code with Vite
+# PreactPixelPerfect: Complete Updated npm Package Setup with Vite
 
-This document contains all the necessary code and configuration files to set up PreactPixelPerfect as an npm package using Vite.
+This document contains all the necessary code and configuration files to set up PreactPixelPerfect as an npm package using Vite, with the latest updates and best practices.
 
 ## Directory Structure
 
@@ -16,7 +16,8 @@ preact-pixelperfect/
 ├── tsconfig.json
 ├── package.json
 ├── README.md
-└── .gitignore
+├── .gitignore
+└── .npmignore
 ```
 
 ## Configuration Files
@@ -74,7 +75,10 @@ export default defineConfig({
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
@@ -130,6 +134,64 @@ export default defineConfig({
 ```
 node_modules
 dist
+```
+
+### .npmignore
+
+```
+# Source files
+src/
+
+# TypeScript config
+tsconfig.json
+tsconfig.node.json
+
+# Vite config
+vite.config.ts
+
+# Development and test files
+example/
+tests/
+*.test.ts
+*.spec.ts
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Build tools
+rollup.config.js
+webpack.config.js
+
+# Miscellaneous
+*.yml
+*.yaml
+.editorconfig
+.prettierrc
+.eslintrc
+CHANGELOG.md
+CONTRIBUTING.md
 ```
 
 ## Source Code
