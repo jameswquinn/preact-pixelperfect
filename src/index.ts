@@ -1,1 +1,1 @@
-placeholder
+export { PixelPerfectImage, PreactPixelPerfect } from './PreactPixelPerfect';
