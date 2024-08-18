@@ -155,7 +155,7 @@ tsconfig.node.json
 export { PixelPerfectImage, PreactPixelPerfect } from './PreactPixelPerfect';
 ```
 
-### src/PreactPixelPerfect.tsx (Part 1)
+### src/PreactPixelPerfect.tsx
 
 ```typescript
 import { h, Component } from 'preact';
@@ -207,23 +207,6 @@ const defaultConfig = {
 };
 
 let config = { ...defaultConfig };
-
-// ... [The rest of the PreactPixelPerfect.tsx file will be in Part 2]
-```
-
-This concludes Part 1 of the PreactPixelPerfect final setup. Part 2 will continue with the rest of the `PreactPixelPerfect.tsx` file and include the example usage and build instructions.
-
-# PreactPixelPerfect: Final Complete npm Package Setup with Vite (Part 2)
-
-Continuing from Part 1, here's the rest of the setup for PreactPixelPerfect.
-
-## Source Code (continued)
-
-### src/PreactPixelPerfect.tsx (Part 2)
-
-```typescript
-// ... [Continuing from Part 1]
-
 const parentFit = {
   contain: (element: HTMLElement, width: number, height: number) => {
     const ratio = width / height;
