@@ -207,6 +207,7 @@ const defaultConfig = {
 };
 
 let config = { ...defaultConfig };
+
 const parentFit = {
   contain: (element: HTMLElement, width: number, height: number) => {
     const ratio = width / height;
