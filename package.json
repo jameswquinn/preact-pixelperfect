@@ -1,1 +1,39 @@
-placeholder
+{
+  "name": "preact-pixelperfect",
+  "version": "1.2.0",
+  "description": "Advanced image loading library for Preact applications with enhanced features",
+  "main": "./dist/preact-pixelperfect.umd.js",
+  "module": "./dist/preact-pixelperfect.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/preact-pixelperfect.es.js",
+      "require": "./dist/preact-pixelperfect.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.5.0",
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.0",
+    "vite-plugin-dts": "^2.3.0"
+  },
+  "keywords": ["preact", "image", "lazy-loading", "performance", "blur-up", "adaptive-quality"],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/preact-pixelperfect.git"
+  }
+}
