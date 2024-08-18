@@ -1,4 +1,4 @@
-# PreactPixelPerfect: Final Complete npm Package Setup with Vite (Part 1)
+# PreactPixelPerfect: Final Complete npm Package Setup with Vite
 
 This document contains the first part of the necessary code and configuration files to set up the final version of PreactPixelPerfect as an npm package using Vite.
 
