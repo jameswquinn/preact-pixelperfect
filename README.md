@@ -1,6 +1,6 @@
 # PreactPixelPerfect
 
-PreactPixelPerfect is an advanced image loading library for Preact applications, offering lazy loading, responsive images, background image handling, and more, with an enhanced blur-up/LQIP effect.
+PreactPixelPerfect is an advanced image loading library for Preact applications, offering lazy loading, responsive images, background image handling, and more, with enhanced features for optimal performance.
 
 ## Features
 
@@ -8,7 +8,11 @@ PreactPixelPerfect is an advanced image loading library for Preact applications,
 - 📱 Responsive image loading with `srcset` and `sizes` support
 - 🌄 Background image lazy loading with `bgset` support
 - 🌫️ Advanced blur-up effect for smoother loading
-- 📡 Device and network-aware image loading
+- 📡 Adaptive quality loading based on network conditions
+- 🏎️ Preloading support for critical images
+- 🛟 Error fallback for graceful error handling
+- 📊 Basic performance metrics tracking
+- 📐 Aspect ratio preservation during lazy loading
 - 🖼️ Support for `<picture>` element and multiple image formats
 - ⚡ Critical image handling for above-the-fold content
 - 🛠️ Customizable configuration
@@ -32,6 +36,8 @@ function MyComponent() {
       sizes="(max-width: 300px) 100vw, (max-width: 600px) 50vw, 33vw"
       alt="Responsive image"
       blurUp={true}
+      adaptiveQuality={true}
+      aspectRatio={16/9}
     />
   );
 }
@@ -39,23 +45,28 @@ function MyComponent() {
 
 ## Advanced Usage
 
-### Blur-up Effect with Custom Options
+### Adaptive Quality and Preloading
 
 ```jsx
 <PixelPerfectImage
   src="large-image.jpg"
   alt="High quality image"
   blurUp={{ enabled: true, size: 60, blur: 30 }}
+  adaptiveQuality={true}
+  preload={true}
+  errorFallback="fallback-image.jpg"
+  onPerformanceLog={(metrics) => console.log(metrics)}
 />
 ```
 
-### Background Image
+### Background Image with Aspect Ratio
 
 ```jsx
 <PixelPerfectImage
   bg="background-image.jpg"
   bgset="small.jpg 300w, medium.jpg 600w, large.jpg 1200w"
-  style={{ width: '100%', height: '300px' }}
+  style={{ width: '100%' }}
+  aspectRatio={16/9}
 />
 ```
 
@@ -66,6 +77,7 @@ function MyComponent() {
   src="critical-image.jpg"
   alt="Above-the-fold content"
   isCritical={true}
+  preload={true}
 />
 ```
 
@@ -75,7 +87,12 @@ function MyComponent() {
 <picture>
   <source type="image/webp" srcset="image.webp" />
   <source type="image/jpeg" srcset="image.jpg" />
-  <PixelPerfectImage src="image.jpg" alt="Fallback" />
+  <PixelPerfectImage 
+    src="image.jpg" 
+    alt="Fallback" 
+    blurUp={true}
+    adaptiveQuality={true}
+  />
 </picture>
 ```
 
@@ -100,6 +117,11 @@ function MyComponent() {
 | `onError` | function | - | Callback on load error |
 | `placeholder` | JSX.Element | - | Custom placeholder element |
 | `style` | CSSProperties | - | Additional styles for the element |
+| `adaptiveQuality` | boolean | false | Enable adaptive quality loading |
+| `preload` | boolean | false | Preload the image |
+| `errorFallback` | string | - | Fallback image URL for error cases |
+| `aspectRatio` | number | - | Aspect ratio to maintain (e.g., 16/9) |
+| `onPerformanceLog` | function | - | Callback for performance metrics |
 
 ### BlurUpOptions
 
@@ -128,9 +150,12 @@ PreactPixelPerfect.setConfig({
 1. Always provide `alt` text for accessibility.
 2. Use `srcset` and `sizes` for responsive images when possible.
 3. Implement blur-up effect for larger images to improve perceived loading speed.
-4. Use the `isCritical` prop for above-the-fold images that should load immediately.
-5. Optimize your images before using them with PreactPixelPerfect for best performance.
-6. Adjust blur-up options based on your specific needs and performance requirements.
+4. Use `adaptiveQuality` for images that can have varying quality based on network conditions.
+5. Set `isCritical` and `preload` for above-the-fold images that should load immediately.
+6. Utilize `aspectRatio` to prevent layout shifts during lazy loading.
+7. Implement `errorFallback` for a better user experience when images fail to load.
+8. Use `onPerformanceLog` to track and optimize image loading performance.
+9. Optimize your images before using them with PreactPixelPerfect for best performance.
 
 ## Browser Support
 
@@ -141,8 +166,9 @@ PreactPixelPerfect uses the Intersection Observer API with a polyfill fallback, 
 - Use appropriately sized images for different device sizes.
 - Implement proper caching strategies on your server.
 - Consider using WebP format for smaller file sizes where supported.
-- Adjust blur-up size and intensity based on your specific use case. Smaller, less blurred placeholders load faster but provide less visual information.
-- For critical, above-the-fold images, consider preloading or using the `isCritical` prop to load immediately.
+- Adjust blur-up size and intensity based on your specific use case.
+- Use `adaptiveQuality` in conjunction with server-side solutions for optimal results.
+- Monitor performance metrics to identify and address bottlenecks.
 
 ## TypeScript Support
 
@@ -165,6 +191,14 @@ PreactPixelPerfect is [MIT licensed](LICENSE).
 If you encounter any issues or have questions, please file an issue on the [GitHub repository](https://github.com/yourusername/preact-pixelperfect/issues).
 
 ## Changelog
+
+### 1.2.0
+
+- Added adaptive quality loading based on network conditions
+- Implemented preloading support for critical images
+- Added error fallback functionality
+- Introduced basic performance metrics tracking
+- Added support for aspect ratio preservation
 
 ### 1.1.0
 
